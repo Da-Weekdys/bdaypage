@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday My Love ❤️</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Entrance animation for love page */
+    .love-page {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .love-page.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Love content container */
+    .love-content {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      overflow-y: auto;
+      overflow-x: hidden;
+      will-change: opacity, transform;
+    }
+    /* Live animated gradient background */
+    .love-content::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 20%, #2d0b2e 0%, #1a051d 30%, #0d0112 70%);
+      z-index: -1;
+      pointer-events: none;
+      animation: liveBgShift 12s ease-in-out infinite alternate;
+    }
+    @keyframes liveBgShift {
+      0% {
+        background:
+          radial-gradient(ellipse at 30% 20%, #2d0b2e 0%, #1a051d 30%, #0d0112 70%);
+      }
+      50% {
+        background:
+          radial-gradient(ellipse at 70% 60%, #2d0b2e 0%, #1a1a3e 30%, #0d0112 70%);
+      }
+      100% {
+        background:
+          radial-gradient(ellipse at 20% 80%, #3d1a3e 0%, #1a051d 30%, #0d0112 70%);
+      }
+    }
+    /* Live ambient glow overlay */
+    .love-ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .love-ambient span {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 107, 157, 0.15), transparent 70%);
+      animation: ambientDrift 8s ease-in-out infinite alternate;
+      will-change: transform, opacity;
+    }
+    @keyframes ambientDrift {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      100% { transform: translate(80px, -60px) scale(1.5); opacity: 0.6; }
+    }
+    /* Floating particles layer */
+    .love-particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .love-particles span {
+      position: absolute;
+      bottom: -20px;
+      animation: particleFloat linear infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== LANDING: Floating Background ===== -->
+  <div class="bg-floating" id="bgFloating"></div>
+
+  <!-- ===== LANDING: Gift Box Card ===== -->
+  <div class="landing" id="landing">
+    <div class="landing-card" id="landingCard">
+      <div class="deco-hearts">
+        <span>💕</span><span>💗</span><span>💕</span>
+      </div>
+
+      <h1 class="title">
+        <span class="title-line1">Happy Birthday</span>
+        <span class="title-line2">Angel Heart Celerinos</span>
+      </h1>
+
+      <div class="divider"><span>✿</span></div>
+
+      <div class="gift-wrapper">
+        <p class="gift-label"></p>
+        <button class="gift-box" id="giftBox" aria-label="Open birthday gift">
+          <div class="gift-lid">
+            <div class="lid-bow"></div>
+            <div class="lid-bow-center"></div>
+            <div class="bow-tail"></div>
+          </div>
+          <div class="gift-body">
+            <div class="ribbon-v"></div>
+            <div class="ribbon-h"></div>
+            <div class="gift-heart">❤️</div>
+          </div>
+          <div class="gift-shadow"></div>
+        </button>
+        <p class="click-hint">✨ Click the gift to open ✨</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TRANSITION OVERLAYS ===== -->
+  <div class="flower-takeover hidden" id="flowerTakeover"></div>
+  <div class="page-transition hidden" id="pageTransition"></div>
+  <div class="sparkle-overlay hidden" id="sparkleOverlay"></div>
+
+  <!-- ===== LOVE CONTENT (revealed after gift click) ===== -->
+  <div class="love-content" id="loveContent" style="display: none;">
+    <!-- Live ambient glow circles -->
+    <div class="love-ambient" id="loveAmbient"></div>
+    <!-- Floating particles layer -->
+    <div class="love-particles" id="loveParticles"></div>
+    <!-- Floating flowers -->
+    <div class="love-floating" id="loveFloating"></div>
+
+    <div class="love-page" id="lovePage">
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator" id="scrollIndicator">
+        <span class="scroll-text">Scroll down to explore</span>
+        <span class="scroll-arrow">▼</span>
+      </div>
+
+      <!-- ===== SECTION 1: GREETING ===== -->
+      <section class="section greeting-section" id="greeting">
+        <div class="greeting-card">
+          <div class="greeting-badge">🎂</div>
+          <h1 class="greeting-title">
+            <span class="greet-line1">Happy Birthday</span>
+            <span class="greet-line2">My Love 💕</span>
+          </h1>
+          <div class="greeting-divider">✿ ✿ ✿</div>
+          <p class="greeting-message">
+            "Happy Birthday to the girl who stole my heart from shs days and makes every ordinary moment feel like pure magic! Being with you is like living in a dream I hope never ends. You're my favorite angel heart, my pepot, my brightest sunshine, and my safest home.
+          </p>
+          <p class="greeting-message">
+            On your special day, I want the whole world to know how completely head over heels I am for you. You aren't just my partner — you're my soulmate and my entire heart. May your day be overflowing with as much sweetness, warmth, and happiness as you bring into my life!"
+          </p>
+          <div class="greeting-hearts">
+            <span>💗</span><span>❤️</span><span>💗</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SECTION 2: PHOTO GALLERY ===== -->
+      <section class="section gallery-section reveal-section" id="gallery">
+        <h2 class="section-title reveal-element">Our Beautiful Memories Together</h2>
+        <p class="section-subtitle reveal-element">Relive our precious moments 💑</p>
+
+        <div class="gallery-grid reveal-element" id="galleryGrid">
+          <!-- Photos loaded dynamically -->
+        </div>
+
+        <div class="gallery-footer reveal-element">
+          <span class="footer-heart">💖</span>
+          <p>So many beautiful memories... and there's so many more to come</p>
+          <span class="footer-heart">💖</span>
+        </div>
+      </section>
+
+<!-- ===== SECTION 3: LOVE LETTER ===== -->
+      <section class="section letter-section reveal-section" id="letter">
+        <div class="letter-sparkles reveal-element" id="letterSparkles"></div>
+        <div class="letter-card reveal-element">
+          <div class="letter-stamp">💌</div>
+          <h2 class="letter-title reveal-element">A Letter From My Heart</h2>
+          <div class="letter-date reveal-element">For the most beautiful person I know</div>
+
+          <div class="letter-body reveal-element">
+            <p>Birthday Letter for Angel Heart</p>
+            <p>To my dearest love, Angel Heart Celerinos,</p>
+            <p>Happy, Happy Birthday, my love! 🎂✨</p>
+            <p>I wanted to write this letter to tell you, from the absolute bottom of my heart, just how deeply I love you. Looking back at our journey, it's amazing to think that we're almost reaching our 4th year together—ever since our Grade 11 Senior High School days. Through every moment, month, and year that has passed, you have remained my favorite blessing and the absolute best thing that has ever happened to me.</p>
+            <p>I am endlessly grateful to have you in my life, but I also want to be honest and humble. I know I'm far from being the perfect man or the "man of your dreams." I've made mistakes and done things that hurt you in the past, right from the very beginning of our relationship—and I know I can get a bit jealous at times. From the bottom of my heart, I humbly ask for your forgiveness. Thank you for your endless patience, your understanding, and for loving me despite all my imperfections.</p>
+            <p>I want to remind you of something very important today: never be ashamed or doubt how you look. To me, outer looks don't define a person, but even so, you are truly beautiful to me in every single way. More than anything, you have a breathtakingly beautiful soul and such a kind, pure heart. That inner beauty is what makes me fall deeper in love with you every single day.</p>
+            <p>My wish for you on your special day is for even more wonderful and amazing things to enter your life. You deserve all the happiness this world has to offer, and I want you to enjoy every single second of it. Please always remember that I am right here by your side—ready to listen, protect, and support you in all your dreams and endeavors.</p>
+            <p>Thank you for bringing so much light, warmth, and love into my world, my love. I love you so much, today and always.</p>
+            <p class="letter-closing">Happy Birthday again, my Angel Heart! 💖</p>
+            <p class="letter-signature">Forever yours,<br /><span class="signature-name">Kyle Geoff A. Cabuhayan</span></p>
+          </div>
+
+          <div class="letter-footer-hearts reveal-element">
+            <span>💕</span><span>💗</span><span>💖</span><span>💗</span><span>💕</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="love-footer">
+        <p>Made By Kyle Geoff A. Cabuhayan ❤️</p>
+        <p class="footer-sub">&copy; 2026 Da__Weekdys!!. All Rights Reserved.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // 1. LANDING: Floating background hearts & petals
+    // ==========================================
+    const bgFloating = document.getElementById('bgFloating');
+    const symbols = ['❤️', '💕', '💗', '🌸', '✨', '🌷', '💖', '🌺'];
+    for (let i = 0; i < 30; i++) {
+      const el = document.createElement('span');
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.animationDuration = (6 + Math.random() * 8) + 's';
+      el.style.animationDelay = (Math.random() * 10) + 's';
+      el.style.fontSize = (12 + Math.random() * 20) + 'px';
+      el.style.opacity = 0.3 + Math.random() * 0.4;
+      bgFloating.appendChild(el);
+    }
+
+    // ==========================================
+    // 2. GIFT BOX CLICK → TRANSITION
+    // ==========================================
+    const giftBox = document.getElementById('giftBox');
+    const landingCard = document.getElementById('landingCard');
+    const landing = document.getElementById('landing');
+    const flowerTakeover = document.getElementById('flowerTakeover');
+    const sparkleOverlay = document.getElementById('sparkleOverlay');
+    const loveContent = document.getElementById('loveContent');
+    const lovePage = document.getElementById('lovePage');
+    let opened = false;
+
+    giftBox.addEventListener('click', () => {
+      if (opened) return;
+      opened = true;
+
+      // Bloom gift box + sparkles
+      giftBox.classList.add('blooming');
+      sparkleOverlay.classList.remove('hidden');
+      sparkleOverlay.classList.add('active');
+      createSparkles();
+
+      setTimeout(() => {
+        // Flower takeover
+        flowerTakeover.classList.remove('hidden');
+        flowerTakeover.classList.add('active');
+        startTakeoverFlowers();
+
+        // Fade out landing card
+        landingCard.style.transition = 'opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease';
+        landingCard.style.opacity = '0';
+        landingCard.style.transform = 'scale(0.7) translateY(40px)';
+        landingCard.style.filter = 'blur(8px)';
+
+        burstConfetti();
+
+        setTimeout(() => {
+          sparkleOverlay.style.opacity = '0';
+        }, 400);
+      }, 800);
+
+      // Reveal love content smoothly
+      setTimeout(() => {
+        flowerTakeover.style.transition = 'opacity 0.8s ease';
+        flowerTakeover.style.opacity = '0';
+
+        landing.style.transition = 'opacity 0.6s ease';
+        landing.style.opacity = '0';
+
+        bgFloating.style.transition = 'opacity 0.6s ease';
+        bgFloating.style.opacity = '0';
+
+        // Show love content
+        loveContent.style.display = 'block';
+        loveContent.style.opacity = '0';
+
+        // Force reflow then fade in
+        void loveContent.offsetHeight;
+        loveContent.style.transition = 'opacity 1s ease';
+        loveContent.style.opacity = '1';
+
+        // After content is visible, fade in the love page and init
+        setTimeout(() => {
+          flowerTakeover.classList.add('hidden');
+          sparkleOverlay.classList.add('hidden');
+
+          // Enable scrolling
+          document.body.style.overflow = 'auto';
+
+          // Show love page with entrance animation
+          lovePage.classList.add('visible');
+
+          // Start love page live background & gallery
+          startLoveAmbient();
+          startLoveParticles();
+          startLoveFlowers();
+          loadGallery();
+          startLetterSparkles();
+          initScrollReveal();
+          initScrollIndicator();
+          initScrollHearts();
+        }, 1200);
+      }, 3000);
+    });
+
+    // ==========================================
+    // 3. SPARKLE BURST
+    // ==========================================
+    function createSparkles() {
+      const colors = ['#ffd700', '#ff6b9d', '#fff', '#ffb4d5', '#ff3d7f'];
+      for (let i = 0; i < 40; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = (30 + Math.random() * 40) + '%';
+        s.style.top = (30 + Math.random() * 40) + '%';
+        s.style.background = colors[Math.floor(Math.random() * colors.length)];
+        s.style.width = (4 + Math.random() * 10) + 'px';
+        s.style.height = (4 + Math.random() * 10) + 'px';
+        s.style.animationDuration = (0.8 + Math.random() * 1.2) + 's';
+        s.style.animationDelay = (Math.random() * 0.3) + 's';
+        sparkleOverlay.appendChild(s);
+        setTimeout(() => s.remove(), 2500);
+      }
+    }
+
+    // ==========================================
+    // 4. FLOWER TAKEOVER
+    // ==========================================
+    function startTakeoverFlowers() {
+      const flowers = ['🌸', '🌹', '🌺', '💐', '🌼', '🌷', '🌻', '🌿', '💖', '💗'];
+      
+      for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+          const petal = document.createElement('span');
+          petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+          petal.style.left = Math.random() * 100 + '%';
+          petal.style.bottom = '-30px';
+          petal.style.position = 'absolute';
+          petal.style.fontSize = (20 + Math.random() * 30) + 'px';
+          petal.style.opacity = 0.5 + Math.random() * 0.5;
+          petal.style.animation = `floatUp ${3 + Math.random() * 5}s linear forwards`;
+          petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+          flowerTakeover.appendChild(petal);
+          setTimeout(() => petal.remove(), 8000);
+        }, i * 30);
+      }
+
+      const interval = setInterval(() => {
+        for (let i = 0; i < 6; i++) {
+          const petal = document.createElement('span');
+          petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+          petal.style.left = Math.random() * 100 + '%';
+          petal.style.bottom = '-20px';
+          petal.style.position = 'absolute';
+          petal.style.fontSize = (18 + Math.random() * 28) + 'px';
+          petal.style.opacity = 0.5 + Math.random() * 0.5;
+          petal.style.animation = `floatUp ${3 + Math.random() * 5}s linear forwards`;
+          petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+          flowerTakeover.appendChild(petal);
+          setTimeout(() => petal.remove(), 8000);
+        }
+      }, 250);
+
+      setTimeout(() => clearInterval(interval), 2800);
+    }
+
+    // ==========================================
+    // 5. CONFETTI BURST
+    // ==========================================
+    function burstConfetti() {
+      const colors = ['#ff6b9d', '#ff3d7f', '#ffb4d5', '#ffd1e8', '#fff', '#ff8cbf', '#ff4d8f', '#ffd700'];
+      for (let i = 0; i < 100; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = (10 + Math.random() * 80) + '%';
+        c.style.top = '-10px';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.width = (6 + Math.random() * 14) + 'px';
+        c.style.height = (6 + Math.random() * 14) + 'px';
+        c.style.animationDuration = (2 + Math.random() * 4) + 's';
+        c.style.animationDelay = (Math.random() * 1.5) + 's';
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        c.style.boxShadow = '0 0 10px rgba(255,255,255,0.3)';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 6000);
+      }
+    }
+
+// ==========================================
+    // 6. LOVE PAGE: Live ambient background
+    // ==========================================
+    function startLoveAmbient() {
+      const container = document.getElementById('loveAmbient');
+      const positions = [
+        { left: '10%', top: '20%', size: '300px', delay: '0s' },
+        { left: '70%', top: '10%', size: '250px', delay: '1s' },
+        { left: '50%', top: '70%', size: '350px', delay: '0.5s' },
+        { left: '20%', top: '80%', size: '200px', delay: '2s' },
+        { left: '80%', top: '60%', size: '280px', delay: '1.5s' }
+      ];
+      positions.forEach(p => {
+        const el = document.createElement('span');
+        el.style.left = p.left;
+        el.style.top = p.top;
+        el.style.width = p.size;
+        el.style.height = p.size;
+        el.style.animationDelay = p.delay;
+        container.appendChild(el);
+      });
+    }
+
+    // ==========================================
+    // 7. LOVE PAGE: Floating particles
+    // ==========================================
+    function startLoveParticles() {
+      const container = document.getElementById('loveParticles');
+      const particles = ['✨', '💫', '🌟', '⭐', '✦', '✧'];
+      
+      for (let i = 0; i < 15; i++) {
+        const el = document.createElement('span');
+        el.textContent = particles[Math.floor(Math.random() * particles.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (8 + Math.random() * 14) + 'px';
+        el.style.opacity = 0.2 + Math.random() * 0.4;
+        el.style.animationDuration = (10 + Math.random() * 15) + 's';
+        el.style.animationDelay = (Math.random() * 10) + 's';
+        container.appendChild(el);
+      }
+      
+      setInterval(() => {
+        const el = document.createElement('span');
+        el.textContent = particles[Math.floor(Math.random() * particles.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (8 + Math.random() * 14) + 'px';
+        el.style.opacity = 0.2 + Math.random() * 0.4;
+        el.style.animationDuration = (10 + Math.random() * 15) + 's';
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 25000);
+      }, 3000);
+    }
+
+    // ==========================================
+    // 8. LOVE PAGE: Floating flowers
+    // ==========================================
+    function startLoveFlowers() {
+      const container = document.getElementById('loveFloating');
+      const flowers = ['🌸', '🌹', '🌺', '🌷', '💐', '🌼', '💖', '💗', '🌻', '🌿'];
+      
+      for (let i = 0; i < 20; i++) {
+        createFlower(container, flowers, true);
+      }
+      setInterval(() => {
+        createFlower(container, flowers, false);
+      }, 1000);
+    }
+
+    function createFlower(container, flowers, randomDelay) {
+      const el = document.createElement('span');
+      el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.bottom = '-30px';
+      el.style.position = 'absolute';
+      el.style.fontSize = (14 + Math.random() * 22) + 'px';
+      el.style.opacity = 0.3 + Math.random() * 0.4;
+      el.style.animation = `floatUp ${8 + Math.random() * 10}s linear infinite`;
+      el.style.animationDelay = randomDelay ? (Math.random() * 10) + 's' : '0s';
+      el.style.transform = `rotate(${Math.random() * 360}deg)`;
+      container.appendChild(el);
+    }
+
+    // ==========================================
+    // 7. LOVE PAGE: Gallery loader
+    // ==========================================
+    function loadGallery() {
+      const grid = document.getElementById('galleryGrid');
+      const photos = [
+        'pic and vid/3a116ede-e24c-492c-8ed5-c9d5885d77c0.jpe',
+        'pic and vid/6bdb7fd6-d2f6-459b-b678-fa7ed40c6d22.jpe',
+        'pic and vid/79b404d0-8e4c-45ac-a323-5d63e5927aa1.jpe',
+        'pic and vid/7111a9f5-f832-4761-afe8-c843607094de.jpe',
+        'pic and vid/f25a94f3-1494-4037-801b-406367c53588.jpe',
+        'pic and vid/fa54f94a-7749-4025-924b-9f37440ed4c3.jpe'
+      ];
+
+      photos.forEach((photo, index) => {
+        const card = document.createElement('div');
+        card.className = 'gallery-item';
+        card.style.animationDelay = (index * 0.15) + 's';
+        const img = document.createElement('img');
+        img.src = photo;
+        img.alt = `Memory ${index + 1}`;
+        img.loading = 'lazy';
+        card.appendChild(img);
+        grid.appendChild(card);
+      });
+    }
+
+    // ==========================================
+    // 9. LETTER SECTION: Live background sparkles
+    // ==========================================
+    function startLetterSparkles() {
+      const container = document.getElementById('letterSparkles');
+      const sparkleChars = ['✦', '✧', '⭐', '✨', '💫', '·', '⋆', '✶'];
+      
+      for (let i = 0; i < 12; i++) {
+        const el = document.createElement('span');
+        el.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (6 + Math.random() * 10) + 'px';
+        el.style.opacity = 0.2 + Math.random() * 0.4;
+        el.style.animationDuration = (4 + Math.random() * 6) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        el.style.color = ['#ffd700', '#ffb4d5', '#fff', '#ffcc80'][Math.floor(Math.random() * 4)];
+        container.appendChild(el);
+      }
+      
+      setInterval(() => {
+        const el = document.createElement('span');
+        el.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (6 + Math.random() * 10) + 'px';
+        el.style.opacity = 0.2 + Math.random() * 0.4;
+        el.style.animationDuration = (4 + Math.random() * 6) + 's';
+        el.style.color = ['#ffd700', '#ffb4d5', '#fff', '#ffcc80'][Math.floor(Math.random() * 4)];
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 12000);
+      }, 2000);
+    }
+
+    // ==========================================
+    // 8. LOVE PAGE: Scroll reveal
+    // ==========================================
+    function initScrollReveal() {
+      const els = document.querySelectorAll('.reveal-section, .reveal-element');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('revealed');
+          } else {
+            e.target.classList.remove('revealed');
+          }
+        });
+      }, { threshold: 0.2, rootMargin: '0px' });
+      els.forEach(el => obs.observe(el));
+    }
+
+    function initScrollIndicator() {
+      const ind = document.getElementById('scrollIndicator');
+      let hidden = false;
+      window.addEventListener('scroll', () => {
+        if (!hidden && window.scrollY > 80) {
+          ind.classList.add('hidden');
+          hidden = true;
+        }
+      }, { passive: true });
+    }
+
+    function initScrollHearts() {
+      let lastScroll = 0;
+      const hearts = ['💖', '💗', '❤️', '💕', '🌸'];
+      window.addEventListener('scroll', () => {
+        const cur = window.scrollY;
+        if (cur - lastScroll > 200) {
+          lastScroll = cur;
+          for (let i = 0; i < 3; i++) {
+            const h = document.createElement('div');
+            h.className = 'scroll-heart';
+            h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            h.style.left = (10 + Math.random() * 80) + '%';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 3000);
+          }
+        }
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>

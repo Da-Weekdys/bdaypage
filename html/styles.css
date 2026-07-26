@@ -1,0 +1,1439 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Poppins', 'Playfair Display', sans-serif;
+  background: radial-gradient(ellipse at 30% 20%, #2d0b2e 0%, #1a051d 30%, #0d0112 70%);
+  color: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === Background romantic ambient glow === */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255, 107, 157, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(255, 61, 127, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(255, 180, 213, 0.08) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* === Floating Background Hearts & Petals === */
+.bg-floating {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.bg-floating span {
+  position: absolute;
+  bottom: -40px;
+  animation: floatUp linear infinite;
+  will-change: transform;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(720deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* === Landing Card === */
+.landing {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.landing-card {
+  width: min(100%, 560px);
+  padding: 40px 32px 48px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+}
+
+.landing-card::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 107, 157, 0.06), transparent 60%);
+  pointer-events: none;
+}
+
+/* === Decorative Hearts === */
+.deco-hearts {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 18px;
+  font-size: 1.6rem;
+}
+
+.deco-hearts span:nth-child(2) {
+  font-size: 2.2rem;
+}
+
+/* === Title === */
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.title-line1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 0 40px rgba(255, 107, 157, 0.3);
+}
+
+.title-line2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #ffb4d5, #ff6b9d, #ff3d7f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 4px;
+  filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.3));
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.3)); }
+  50% { filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.5)); }
+}
+
+/* === Divider === */
+.divider {
+  margin: 12px 0 20px;
+  font-size: 1.2rem;
+  color: #bbb;
+}
+
+/* === Gift Wrapper === */
+.gift-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.gift-label {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.18em;
+  text-shadow: 0 0 30px rgba(255, 107, 157, 0.4);
+  animation: labelFloat 3s ease-in-out infinite;
+}
+
+@keyframes labelFloat {
+  0%, 100% {
+    transform: translateY(0);
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+  }
+  50% {
+    transform: translateY(-4px);
+    text-shadow: 0 0 40px rgba(255, 107, 157, 0.6);
+  }
+}
+
+/* === Gift Box === */
+.gift-box {
+  position: relative;
+  width: 180px;
+  height: 200px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.gift-box:focus {
+  outline: 2px solid #999;
+  outline-offset: 10px;
+  border-radius: 12px;
+}
+
+.gift-box:hover {
+  transform: scale(1.05);
+}
+
+/* Gift Lid */
+.gift-lid {
+  position: relative;
+  width: 170px;
+  height: 50px;
+  background: linear-gradient(180deg, #ffd0ec 0%, #ff7aa3 100%);
+  border-radius: 16px 16px 10px 10px;
+  z-index: 2;
+  box-shadow: 0 4px 15px rgba(255, 122, 163, 0.4);
+  transform-origin: center bottom;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: visible;
+}
+
+/* Bow - left loop */
+.lid-bow {
+  position: absolute;
+  z-index: 5;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lid-bow::before {
+  content: '';
+  position: absolute;
+  width: 34px;
+  height: 28px;
+  background: linear-gradient(135deg, #fff 0%, #ffb4d5 40%, #ff6b9d 100%);
+  border-radius: 50% 10% 50% 10%;
+  left: -30px;
+  top: 0;
+  transform: rotate(-35deg) skewX(-5deg);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
+  filter: drop-shadow(0 2px 6px rgba(255, 107, 157, 0.3));
+}
+
+.lid-bow::after {
+  content: '';
+  position: absolute;
+  width: 34px;
+  height: 28px;
+  background: linear-gradient(225deg, #fff 0%, #ffb4d5 40%, #ff6b9d 100%);
+  border-radius: 10% 50% 10% 50%;
+  left: -4px;
+  top: 0;
+  transform: rotate(35deg) skewX(5deg);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
+  filter: drop-shadow(0 2px 6px rgba(255, 107, 157, 0.3));
+}
+
+/* Bow center knot */
+.lid-bow-center {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 16px;
+  background: radial-gradient(circle at 40% 35%, #fff, #ffb4d5 50%, #ff6b9d 100%);
+  border-radius: 50%;
+  z-index: 6;
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.5);
+}
+
+/* Bow tails hanging down */
+.bow-tail {
+  position: absolute;
+  z-index: 4;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bow-tail::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 36px;
+  background: linear-gradient(180deg, #ffb4d5, #ff7aa3);
+  border-radius: 0 0 8px 4px;
+  left: -18px;
+  top: 0;
+  transform: rotate(12deg);
+  opacity: 0.7;
+}
+
+.bow-tail::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 36px;
+  background: linear-gradient(180deg, #ffb4d5, #ff7aa3);
+  border-radius: 0 0 4px 8px;
+  left: 6px;
+  top: 0;
+  transform: rotate(-12deg);
+  opacity: 0.7;
+}
+
+/* Gift Body */
+.gift-body {
+  position: relative;
+  width: 170px;
+  height: 130px;
+  background: linear-gradient(180deg, #ff6f9f 0%, #d1206d 100%);
+  border-radius: 0 0 16px 16px;
+  margin-top: -4px;
+  box-shadow: 0 8px 30px rgba(209, 32, 109, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Ribbon - Vertical cross-band */
+.ribbon-v {
+  position: absolute;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(180deg, #fff 0%, #ffe8f2 40%, #ffd0ec 100%);
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+}
+
+/* Ribbon - Horizontal cross-band */
+.ribbon-h {
+  position: absolute;
+  height: 30px;
+  width: 100%;
+  background: linear-gradient(90deg, #fff 0%, #ffe8f2 40%, #ffd0ec 100%);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Subtle ribbon fold lines */
+.ribbon-v::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgba(200, 150, 170, 0.3);
+  transform: translateX(-50%);
+}
+
+.ribbon-h::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: rgba(200, 150, 170, 0.3);
+  transform: translateY(-50%);
+}
+
+.gift-heart {
+  position: relative;
+  z-index: 3;
+  font-size: 2rem;
+}
+
+/* Gift Shadow */
+.gift-shadow {
+  position: absolute;
+  bottom: -12px;
+  width: 120px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  filter: blur(8px);
+}
+
+/* Blooming state */
+.gift-box.blooming {
+  animation: none;
+  transform: scale(1.1);
+}
+
+.gift-box.blooming .gift-lid {
+  transform: translateY(-40px) rotate(-8deg) scale(1.05);
+}
+
+.gift-box.blooming .gift-body {
+  animation: bodySwell 0.6s ease forwards;
+}
+
+@keyframes bodySwell {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1.02); }
+}
+
+/* === Click Hint === */
+.click-hint {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #999;
+  letter-spacing: 0.2em;
+  font-weight: 300;
+}
+
+/* === Flower Overlay === */
+.flower-overlay {
+  position: absolute;
+  inset: 0;
+  background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 40px;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.flower-overlay.visible {
+  opacity: 1;
+}
+
+.overlay-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 30px;
+}
+
+.big-heart {
+  font-size: 3rem;
+  display: inline-block;
+}
+
+.overlay-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: #1a1a2e;
+  letter-spacing: 0.06em;
+}
+
+.overlay-text p {
+  color: #666;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  font-weight: 300;
+}
+
+/* === Flower Rain === */
+.flower-rain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden;
+}
+
+.flower-rain span {
+  position: absolute;
+  top: -40px;
+  animation: flowerFall linear forwards;
+  will-change: transform;
+}
+
+@keyframes flowerFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* === Confetti Pieces === */
+.confetti-piece {
+  position: fixed;
+  pointer-events: none;
+  z-index: 30;
+  animation: confettiDrop ease-in forwards;
+}
+
+@keyframes confettiDrop {
+  0% {
+    transform: translateY(-20px) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(1080deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* === Utility Classes === */
+.hidden {
+  display: none !important;
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* === Scroll Indicator === */
+.scroll-indicator {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+.scroll-text {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.15em;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.scroll-arrow {
+  display: inline-block;
+  font-size: 1rem;
+  color: rgba(255, 180, 213, 0.5);
+  animation: bounceArrow 1.6s ease-in-out infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* === Scroll-Triggered Reveal Animations === */
+.reveal-section,
+.reveal-element {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-section.revealed,
+.reveal-element.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered delays for child elements */
+.reveal-section .reveal-element {
+  transition-delay: 0.1s;
+}
+
+.reveal-section.revealed .reveal-element:nth-child(2) { transition-delay: 0.15s; }
+.reveal-section.revealed .reveal-element:nth-child(3) { transition-delay: 0.25s; }
+.reveal-section.revealed .reveal-element:nth-child(4) { transition-delay: 0.35s; }
+.reveal-section.revealed .reveal-element:nth-child(5) { transition-delay: 0.45s; }
+.reveal-section.revealed .reveal-element:nth-child(6) { transition-delay: 0.55s; }
+.reveal-section.revealed .reveal-element:nth-child(7) { transition-delay: 0.65s; }
+
+/* Scroll hearts that appear while scrolling */
+.scroll-heart {
+  position: fixed;
+  bottom: 20px;
+  pointer-events: none;
+  z-index: 100;
+  font-size: 1.6rem;
+  animation: scrollHeartRise 2.5s ease-out forwards;
+}
+
+@keyframes scrollHeartRise {
+  0% {
+    transform: translateY(0) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: translateY(-250px) scale(0.4) rotate(40deg);
+    opacity: 0;
+  }
+}
+
+/* === Sparkle Animation === */
+.sparkle {
+  --tx: 0px;
+  --ty: 0px;
+}
+
+.sparkle:nth-child(odd) {
+  --tx: -60px;
+  --ty: -80px;
+}
+
+.sparkle:nth-child(even) {
+  --tx: 60px;
+  --ty: -90px;
+}
+
+.landing-body {
+  overflow: hidden;
+}
+
+/* Sparkle overlay for gift opening */
+.sparkle-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.sparkle-overlay.active {
+  opacity: 1;
+}
+
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  animation: sparkleBurst ease-out forwards;
+}
+
+@keyframes sparkleBurst {
+  0% {
+    transform: translate(0, 0) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(180deg);
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Full-screen flower takeover overlay */
+.flower-takeover {
+  position: fixed;
+  inset: 0;
+  background: #1a051d;
+  z-index: 50;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.flower-takeover.active {
+  opacity: 1;
+}
+
+.flower-takeover span {
+  will-change: transform;
+}
+
+/* Page transition swipe */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #1a051d;
+  transform: translateY(100%);
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.page-transition.active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   LOVE PAGE
+   ========================================== */
+
+.love-body {
+  background: transparent;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
+  position: relative;
+}
+
+.love-body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, #2d0b2e 0%, #1a051d 30%, #0d0112 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Floating flowers on love page */
+.love-floating {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.love-floating span {
+  will-change: transform;
+}
+
+/* Love page main container */
+.love-page {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 40px;
+}
+
+/* ===== SECTION BASE ===== */
+.section {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  text-align: center;
+  color: #ffb4d5;
+  margin-bottom: 12px;
+  letter-spacing: 0.06em;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+  margin-bottom: 40px;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+/* ===== GREETING SECTION ===== */
+.greeting-section {
+  padding-top: 80px;
+}
+
+.greeting-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 32px;
+  padding: 48px 36px;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.greeting-badge {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  animation: heartPulse 1.8s ease-in-out infinite;
+}
+
+.greeting-title {
+  margin-bottom: 16px;
+}
+
+.greet-line1 {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.12em;
+}
+
+.greet-line2 {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffb4d5, #ff6b9d, #ff3d7f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 4px;
+}
+
+.greeting-divider {
+  color: rgba(255, 180, 213, 0.4);
+  font-size: 1.2rem;
+  letter-spacing: 0.5em;
+  margin: 16px 0 24px;
+}
+
+.greeting-message {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.9;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.greeting-hearts {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  font-size: 1.8rem;
+}
+
+.greeting-hearts span:nth-child(2) {
+  animation: heartPulse 1.2s ease-in-out infinite;
+  font-size: 2.2rem;
+}
+
+/* ===== PHOTO GALLERY ===== */
+.gallery-section {
+  padding-top: 40px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: galleryReveal 0.8s ease forwards;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+@keyframes galleryReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery-item.video-item {
+  cursor: pointer;
+}
+
+.gallery-item.video-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 107, 157, 0.85);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(255, 107, 157, 0.4);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.gallery-item.video-item:hover .video-play-icon {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.gallery-footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+}
+
+.footer-heart {
+  font-size: 2rem;
+  display: inline-block;
+  animation: heartPulse 1.6s ease-in-out infinite;
+}
+
+.gallery-footer p {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+  margin: 12px 0;
+  font-style: italic;
+}
+
+/* ===== LOVE LETTER ===== */
+.letter-section {
+  padding-top: 40px;
+  padding-bottom: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Live animated background for Section 3 only */
+.letter-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(255, 140, 0, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(255, 200, 100, 0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 107, 157, 0.08) 0%, transparent 40%);
+  z-index: 0;
+  pointer-events: none;
+  animation: letterBgShift 8s ease-in-out infinite alternate;
+  border-radius: 0;
+}
+
+@keyframes letterBgShift {
+  0% {
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(255, 140, 0, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(255, 200, 100, 0.10) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 80%, rgba(255, 107, 157, 0.08) 0%, transparent 40%);
+  }
+  50% {
+    background:
+      radial-gradient(ellipse at 70% 30%, rgba(255, 160, 50, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 70%, rgba(255, 220, 150, 0.10) 0%, transparent 45%),
+      radial-gradient(ellipse at 60% 50%, rgba(255, 107, 157, 0.10) 0%, transparent 40%);
+  }
+  100% {
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(255, 120, 20, 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(255, 200, 120, 0.12) 0%, transparent 45%),
+      radial-gradient(ellipse at 20% 50%, rgba(255, 150, 200, 0.08) 0%, transparent 40%);
+  }
+}
+
+/* Floating sparkles layer inside letter section */
+.letter-sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 32px;
+}
+
+.letter-sparkles span {
+  position: absolute;
+  bottom: -10px;
+  animation: letterSparkleFloat linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes letterSparkleFloat {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-30px) rotate(72deg) scale(1);
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-300px) rotate(360deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.letter-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 32px;
+  padding: 48px 36px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.letter-stamp {
+  position: absolute;
+  top: -18px;
+  right: 30px;
+  font-size: 2.8rem;
+  animation: stampFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 15px rgba(255, 107, 157, 0.4));
+}
+
+@keyframes stampFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(6deg); }
+}
+
+.letter-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  text-align: center;
+  color: #ffb4d5;
+  margin-bottom: 8px;
+}
+
+.letter-date {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+
+.letter-body {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.letter-body p {
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 2;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  position: relative;
+  padding-left: 4px;
+}
+
+.letter-body p:first-child {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #ffb4d5;
+}
+
+.letter-closing {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4rem !important;
+  color: #ff8cbf !important;
+  text-align: center;
+  margin-top: 32px !important;
+}
+
+.letter-signature {
+  text-align: right !important;
+  margin-top: 8px !important;
+  padding-right: 10px;
+}
+
+.signature-name {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4rem;
+  color: #ff6b9d;
+}
+
+.letter-footer-hearts {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+  font-size: 1.6rem;
+}
+
+.letter-footer-hearts span {
+  animation: heartPulse 2s ease-in-out infinite;
+}
+
+.letter-footer-hearts span:nth-child(3) {
+  font-size: 2rem;
+  animation-delay: 0.1s;
+}
+
+/* === Love Footer === */
+.love-footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+}
+
+.love-footer .footer-sub {
+  font-size: 0.75rem;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.25);
+  font-style: italic;
+}
+
+/* === Responsive === */
+/* Small laptops and tablets */
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 16px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+
+  .greeting-card,
+  .letter-card {
+    padding: 36px 24px;
+    border-radius: 24px;
+  }
+
+  .letter-body {
+    max-width: 100%;
+  }
+
+  .letter-body p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  .landing-card {
+    padding: 28px 16px 32px;
+    border-radius: 24px;
+  }
+
+  .gift-box {
+    width: 130px;
+    height: 150px;
+  }
+
+  .gift-lid {
+    width: 120px;
+    height: 36px;
+    border-radius: 12px 12px 8px 8px;
+  }
+
+  .gift-body {
+    width: 120px;
+    height: 100px;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .lid-bow {
+    width: 28px;
+    height: 28px;
+    top: -8px;
+  }
+
+  .lid-bow::before,
+  .lid-bow::after {
+    width: 16px;
+    height: 10px;
+  }
+
+  .gift-heart {
+    font-size: 1.4rem;
+  }
+
+  .ribbon-v {
+    width: 18px;
+  }
+
+  .ribbon-h {
+    height: 16px;
+  }
+
+  .gift-shadow {
+    width: 80px;
+    bottom: -6px;
+  }
+
+  .deco-hearts {
+    font-size: 1.3rem;
+    gap: 14px;
+  }
+
+  .deco-hearts span:nth-child(2) {
+    font-size: 1.8rem;
+  }
+
+  .click-hint {
+    font-size: 0.75rem;
+  }
+
+  .section {
+    padding: 32px 12px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .gallery-item {
+    border-radius: 14px;
+  }
+
+  .gallery-footer {
+    margin-top: 24px;
+    padding: 12px;
+  }
+
+  .gallery-footer p {
+    font-size: 0.85rem;
+  }
+
+  .greeting-card,
+  .letter-card {
+    padding: 28px 16px;
+    border-radius: 20px;
+  }
+
+  .greeting-badge {
+    font-size: 2.8rem;
+  }
+
+  .greeting-message {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .greeting-hearts {
+    font-size: 1.4rem;
+    gap: 10px;
+  }
+
+  .greeting-hearts span:nth-child(2) {
+    font-size: 1.8rem;
+  }
+
+  .letter-card {
+    padding: 28px 16px;
+  }
+
+  .letter-title {
+    font-size: 1.5rem;
+  }
+
+  .letter-body p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .letter-closing {
+    font-size: 1.2rem !important;
+  }
+
+  .signature-name {
+    font-size: 1.2rem;
+  }
+
+  .letter-footer-hearts {
+    font-size: 1.3rem;
+    gap: 8px;
+  }
+
+  .letter-footer-hearts span:nth-child(3) {
+    font-size: 1.6rem;
+  }
+
+  .letter-stamp {
+    font-size: 2.2rem;
+    top: -12px;
+    right: 16px;
+  }
+
+  .scroll-indicator {
+    padding: 24px 12px 16px;
+  }
+
+  .scroll-text {
+    font-size: 0.8rem;
+  }
+
+.love-footer {
+    padding: 24px 12px;
+    font-size: 0.8rem;
+  }
+
+  .love-footer .footer-sub {
+    font-size: 0.7rem;
+  }
+
+  .footer-heart {
+    font-size: 1.6rem;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  html {
+    font-size: 12px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .gift-box {
+    width: 110px;
+    height: 130px;
+  }
+
+  .gift-lid {
+    width: 100px;
+    height: 30px;
+  }
+
+  .gift-body {
+    width: 100px;
+    height: 88px;
+  }
+
+  .gift-heart {
+    font-size: 1.2rem;
+  }
+}
+
+/* Landscape phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .landing {
+    padding: 10px;
+    min-height: auto;
+  }
+
+  .landing-card {
+    padding: 16px 20px;
+    border-radius: 20px;
+  }
+
+  .gift-box {
+    width: 100px;
+    height: 110px;
+  }
+
+  .gift-lid {
+    width: 90px;
+    height: 28px;
+  }
+
+  .gift-body {
+    width: 90px;
+    height: 72px;
+  }
+
+  .gift-heart {
+    font-size: 1rem;
+  }
+
+  .deco-hearts {
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+
+  .title {
+    margin-bottom: 4px;
+  }
+
+  .gift-wrapper {
+    gap: 6px;
+  }
+
+  .gift-label {
+    font-size: 1rem;
+  }
+
+  .click-hint {
+    font-size: 0.7rem;
+  }
+
+  .love-content {
+    overflow-y: auto;
+  }
+}
+
